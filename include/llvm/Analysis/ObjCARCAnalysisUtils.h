@@ -23,8 +23,8 @@
 #ifndef LLVM_LIB_ANALYSIS_OBJCARCANALYSISUTILS_H
 #define LLVM_LIB_ANALYSIS_OBJCARCANALYSISUTILS_H
 
-#include "llvm/ADT/StringSwitch.h"
 #include "llvm/ADT/Optional.h"
+#include "llvm/ADT/StringSwitch.h"
 #include "llvm/Analysis/AliasAnalysis.h"
 #include "llvm/Analysis/ObjCARCInstKind.h"
 #include "llvm/Analysis/Passes.h"
@@ -84,6 +84,16 @@ inline const Value *GetUnderlyingObjCPtr(const Value *V,
   }
 
   return V;
+}
+
+/// A wrapper for GetUnderlyingObjCPtr used for results memoization.
+inline const Value *
+GetUnderlyingObjCPtrCached(const Value *V, const DataLayout &DL,
+                           DenseMap<const Value *, const Value *> &Cache) {
+  if (auto InCache = Cache.lookup(V))
+    return InCache;
+
+  return Cache[V] = GetUnderlyingObjCPtr(V, DL);
 }
 
 /// The RCIdentity root of a value \p V is a dominating value U for which

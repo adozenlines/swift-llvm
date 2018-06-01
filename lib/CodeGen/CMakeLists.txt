@@ -11,7 +11,6 @@ add_llvm_library(LLVMCodeGen
   CallingConvLower.cpp
   CodeGen.cpp
   CodeGenPrepare.cpp
-  CountingFunctionInserter.cpp
   CriticalAntiDepBreaker.cpp
   DeadMachineInstructionElim.cpp
   DetectDeadLanes.cpp
@@ -21,8 +20,11 @@ add_llvm_library(LLVMCodeGen
   EdgeBundles.cpp
   ExecutionDepsFix.cpp
   ExpandISelPseudos.cpp
+  ExpandMemCmp.cpp
   ExpandPostRAPseudos.cpp
+  ExpandReductions.cpp
   FaultMaps.cpp
+  FEntryInserter.cpp
   FuncletLayout.cpp
   GCMetadata.cpp
   GCMetadataPrinter.cpp
@@ -31,6 +33,7 @@ add_llvm_library(LLVMCodeGen
   GlobalMerge.cpp
   IfConversion.cpp
   ImplicitNullChecks.cpp
+  IndirectBrExpandPass.cpp
   InlineSpiller.cpp
   InterferenceCache.cpp
   InterleavedAccessPass.cpp
@@ -40,14 +43,16 @@ add_llvm_library(LLVMCodeGen
   LexicalScopes.cpp
   LiveDebugValues.cpp
   LiveDebugVariables.cpp
-  LiveIntervalAnalysis.cpp
+  LiveIntervals.cpp
   LiveInterval.cpp
   LiveIntervalUnion.cpp
   LivePhysRegs.cpp
   LiveRangeCalc.cpp
   LiveRangeEdit.cpp
+  LiveRangeShrink.cpp
   LiveRegMatrix.cpp
-  LiveStackAnalysis.cpp
+  LiveRegUnits.cpp
+  LiveStacks.cpp
   LiveVariables.cpp
   LLVMTargetMachine.cpp
   LocalStackSlotAllocation.cpp
@@ -62,6 +67,7 @@ add_llvm_library(LLVMCodeGen
   MachineCSE.cpp
   MachineDominanceFrontier.cpp
   MachineDominators.cpp
+  MachineFrameInfo.cpp
   MachineFunction.cpp
   MachineFunctionPass.cpp
   MachineFunctionPrinterPass.cpp
@@ -71,7 +77,9 @@ add_llvm_library(LLVMCodeGen
   MachineLoopInfo.cpp
   MachineModuleInfo.cpp
   MachineModuleInfoImpls.cpp
+  MachineOperand.cpp
   MachineOptimizationRemarkEmitter.cpp
+  MachineOutliner.cpp
   MachinePassRegistry.cpp
   MachinePipeliner.cpp
   MachinePostDominators.cpp
@@ -85,6 +93,7 @@ add_llvm_library(LLVMCodeGen
   PatchableFunction.cpp
   MIRPrinter.cpp
   MIRPrintingPass.cpp
+  MacroFusion.cpp
   OptimizePHIs.cpp
   ParallelCG.cpp
   PeepholeOptimizer.cpp
@@ -106,6 +115,7 @@ add_llvm_library(LLVMCodeGen
   RegisterPressure.cpp
   RegisterScavenging.cpp
   RenameIndependentSubregs.cpp
+  MIRCanonicalizerPass.cpp
   RegisterUsageInfo.cpp
   RegUsageInfoCollector.cpp
   RegUsageInfoPropagate.cpp
@@ -113,6 +123,7 @@ add_llvm_library(LLVMCodeGen
   SafeStack.cpp
   SafeStackColoring.cpp
   SafeStackLayout.cpp
+  ScalarizeMaskedMemIntrin.cpp
   ScheduleDAG.cpp
   ScheduleDAGInstrs.cpp
   ScheduleDAGPrinter.cpp
@@ -149,7 +160,7 @@ add_llvm_library(LLVMCodeGen
   ${LLVM_MAIN_INCLUDE_DIR}/llvm/CodeGen
   ${LLVM_MAIN_INCLUDE_DIR}/llvm/CodeGen/PBQP
 
-  LINK_LIBS ${PTHREAD_LIB}
+  LINK_LIBS ${LLVM_PTHREAD_LIB}
 
   DEPENDS
   intrinsics_gen
